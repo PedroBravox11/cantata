@@ -37,3 +37,6 @@ I develop Cantata purely for fun, so no donations are required. However, seeing 
 
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2X2CTDUH27V9L&source=url)
 
+
+This project is tested with BrowserStack
+
