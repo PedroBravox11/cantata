@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile Picture AI — Free PFP & DP Maker</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <header class="top-bar">
+    <div class="logo">
+      <div class="logo-mark">◎</div>
+      <div>
+        <p class="logo-title">Profile Picture AI</p>
+        <p class="logo-sub">Free PFP & DP Maker</p>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button class="pill primary">Unlock all styles now!</button>
+      <button class="pill ghost">Login</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="hero">
+      <div class="hero-left">
+        <p class="eyebrow">AI profile maker</p>
+        <h1>Free PFP & DP Maker</h1>
+        <p class="subtitle">Create stunning Telegram, WhatsApp, Instagram, and LinkedIn profile photos with borders, effects, and text overlays — right in your browser.</p>
+        <div class="upload-card" id="uploadCard">
+          <div class="upload-icon">⬆</div>
+          <div>
+            <p class="upload-title">Upload a photo or drag &amp; drop</p>
+            <p class="upload-sub">PNG, JPG up to 8MB • stays on your device</p>
+          </div>
+          <button class="pill primary" id="uploadButton">Select file</button>
+          <input type="file" id="fileInput" accept="image/*" hidden />
+        </div>
+        <div class="mini-examples">
+          <div class="example-chip">IG Ring</div>
+          <div class="example-chip">Neon</div>
+          <div class="example-chip">Soft Glow</div>
+        </div>
+        <div class="example-avatars">
+          <div class="avatar-ring gradient"></div>
+          <div class="avatar-ring cyan"></div>
+          <div class="avatar-ring pink"></div>
+          <div class="avatar-ring orange"></div>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-mock">
+          <div class="mock-header">Preview styles</div>
+          <div class="mock-grid">
+            <div class="mock-circle"></div>
+            <div class="mock-circle"></div>
+            <div class="mock-circle"></div>
+            <div class="mock-circle"></div>
+          </div>
+          <div class="mock-footer">No signup required</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="editor" id="editor" hidden>
+      <aside class="left-rail">
+        <nav class="tool-list">
+          <button class="tool-btn active" data-panel="position">Position</button>
+          <button class="tool-btn" data-panel="background">Background</button>
+          <button class="tool-btn" data-panel="filters">Filters</button>
+          <button class="tool-btn" data-panel="border">Border</button>
+          <button class="tool-btn" data-panel="text">Text</button>
+        </nav>
+        <div class="tool-panel">
+          <div class="panel active" id="panel-position">
+            <div class="panel-header">
+              <h3>Position</h3>
+              <button class="ghost-btn" id="autoCenter">Auto</button>
+            </div>
+            <label class="control">
+              <span>Scale</span>
+              <div class="slider-row">
+                <input type="range" id="scale" min="0.5" max="3" step="0.01" value="1" />
+                <span class="value" id="scaleValue">1.00x</span>
+              </div>
+            </label>
+            <label class="control">
+              <span>Rotate</span>
+              <div class="slider-row">
+                <input type="range" id="rotate" min="-180" max="180" step="1" value="0" />
+                <span class="value" id="rotateValue">0°</span>
+              </div>
+            </label>
+            <div class="control">
+              <span>Reflect</span>
+              <div class="button-row">
+                <button class="pill ghost" id="reflectH">Horizontal</button>
+                <button class="pill ghost" id="reflectV">Vertical</button>
+              </div>
+            </div>
+            <div class="control">
+              <span>Shape</span>
+              <div class="button-row">
+                <button class="pill toggle active" data-shape="circle">Circle</button>
+                <button class="pill toggle" data-shape="square">Square</button>
+                <button class="pill toggle" data-shape="rounded">Rounded</button>
+              </div>
+            </div>
+            <button class="pill ghost full" id="resetPosition">Reset position</button>
+          </div>
+
+          <div class="panel" id="panel-background">
+            <div class="panel-header">
+              <h3>Background</h3>
+            </div>
+            <div class="control">
+              <span>Background Type</span>
+              <div class="button-row">
+                <button class="pill toggle active" data-bg-type="solid">Solid</button>
+                <button class="pill toggle" data-bg-type="gradient">Gradient</button>
+                <button class="pill toggle" data-bg-type="pattern">Pattern</button>
+                <button class="pill toggle" data-bg-type="image">Image</button>
+              </div>
+            </div>
+            <div class="control" id="bgSolidControls">
+              <span>Solid colors</span>
+              <div class="swatch-row" id="bgSolidSwatches"></div>
+              <input type="color" id="bgSolidPicker" value="#1c1f2a" />
+            </div>
+            <div class="control" id="bgGradientControls" hidden>
+              <span>Gradient colors</span>
+              <div class="swatch-row" id="bgGradientSwatches"></div>
+              <div class="gradient-edit">
+                <input type="color" class="grad-color" value="#ff6b6b" />
+                <input type="color" class="grad-color" value="#6b7bff" />
+                <input type="color" class="grad-color" value="#2dd4bf" />
+                <input type="color" class="grad-color" value="#ffd166" />
+              </div>
+              <label class="control">
+                <span>Angle</span>
+                <div class="slider-row">
+                  <input type="range" id="bgGradientAngle" min="0" max="360" value="135" />
+                  <span class="value" id="bgGradientAngleValue">135°</span>
+                </div>
+              </label>
+              <div class="button-row">
+                <button class="pill toggle active" data-bg-grad="linear">Linear</button>
+                <button class="pill toggle" data-bg-grad="radial">Radial</button>
+              </div>
+            </div>
+            <div class="control" id="bgPatternControls" hidden>
+              <span>Pattern</span>
+              <div class="pattern-grid">
+                <button class="pattern-btn active" data-pattern="grid">Grid</button>
+                <button class="pattern-btn" data-pattern="dots">Dots</button>
+                <button class="pattern-btn" data-pattern="diagonal">Diagonal</button>
+                <button class="pattern-btn" data-pattern="zigzag">Zigzag</button>
+              </div>
+            </div>
+            <div class="control" id="bgImageControls" hidden>
+              <span>Background Image</span>
+              <button class="pill ghost" id="bgImageUpload">Upload image</button>
+              <input type="file" id="bgImageInput" accept="image/*" hidden />
+              <div class="button-row">
+                <button class="pill toggle active" data-bg-fit="cover">Cover</button>
+                <button class="pill toggle" data-bg-fit="contain">Contain</button>
+              </div>
+              <label class="control">
+                <span>Blur</span>
+                <div class="slider-row">
+                  <input type="range" id="bgImageBlur" min="0" max="20" value="0" />
+                  <span class="value" id="bgImageBlurValue">0px</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="panel" id="panel-filters">
+            <div class="panel-header">
+              <h3>Filters</h3>
+              <button class="ghost-btn" id="resetFilters">Reset</button>
+            </div>
+            <div class="preset-row" id="filterPresets"></div>
+            <label class="control">
+              <span>Brightness</span>
+              <div class="slider-row">
+                <input type="range" id="brightness" min="0" max="200" value="100" />
+                <span class="value" id="brightnessValue">100%</span>
+              </div>
+            </label>
+            <label class="control">
+              <span>Contrast</span>
+              <div class="slider-row">
+                <input type="range" id="contrast" min="0" max="200" value="100" />
+                <span class="value" id="contrastValue">100%</span>
+              </div>
+            </label>
+            <label class="control">
+              <span>Saturation</span>
+              <div class="slider-row">
+                <input type="range" id="saturation" min="0" max="200" value="100" />
+                <span class="value" id="saturationValue">100%</span>
+              </div>
+            </label>
+            <label class="control">
+              <span>Blur</span>
+              <div class="slider-row">
+                <input type="range" id="blur" min="0" max="20" value="0" />
+                <span class="value" id="blurValue">0px</span>
+              </div>
+            </label>
+            <label class="control">
+              <span>Grayscale</span>
+              <div class="slider-row">
+                <input type="range" id="grayscale" min="0" max="100" value="0" />
+                <span class="value" id="grayscaleValue">0%</span>
+              </div>
+            </label>
+            <label class="control">
+              <span>Hue Rotate</span>
+              <div class="slider-row">
+                <input type="range" id="hue" min="0" max="360" value="0" />
+                <span class="value" id="hueValue">0°</span>
+              </div>
+            </label>
+            <label class="control">
+              <span>Invert</span>
+              <div class="slider-row">
+                <input type="range" id="invert" min="0" max="100" value="0" />
+                <span class="value" id="invertValue">0%</span>
+              </div>
+            </label>
+            <label class="control">
+              <span>Sepia</span>
+              <div class="slider-row">
+                <input type="range" id="sepia" min="0" max="100" value="0" />
+                <span class="value" id="sepiaValue">0%</span>
+              </div>
+            </label>
+          </div>
+
+          <div class="panel" id="panel-border">
+            <div class="panel-header">
+              <h3>Border</h3>
+            </div>
+            <div class="control">
+              <span>Border Type</span>
+              <div class="button-row">
+                <button class="pill toggle active" data-border-type="solid">Solid</button>
+                <button class="pill toggle" data-border-type="gradient">Gradient</button>
+              </div>
+            </div>
+            <label class="control">
+              <span>Border Width</span>
+              <div class="slider-row">
+                <input type="range" id="borderWidth" min="0" max="200" value="40" />
+                <span class="value" id="borderWidthValue">40px</span>
+              </div>
+            </label>
+            <label class="control">
+              <span>Border Opacity</span>
+              <div class="slider-row">
+                <input type="range" id="borderOpacity" min="0" max="100" value="100" />
+                <span class="value" id="borderOpacityValue">100%</span>
+              </div>
+            </label>
+            <label class="control">
+              <span>Border Offset</span>
+              <div class="slider-row">
+                <input type="range" id="borderOffset" min="-50" max="50" value="0" />
+                <span class="value" id="borderOffsetValue">0px</span>
+              </div>
+            </label>
+            <label class="control">
+              <span>Border Rotation</span>
+              <div class="slider-row">
+                <input type="range" id="borderRotation" min="0" max="360" value="0" />
+                <span class="value" id="borderRotationValue">0°</span>
+              </div>
+            </label>
+            <div class="control">
+              <span>Border Cap Style</span>
+              <select id="borderCap">
+                <option value="round">Rounded</option>
+                <option value="butt">Butt</option>
+                <option value="square">Square</option>
+              </select>
+            </div>
+            <div class="control" id="borderSolidControls">
+              <span>Solid Colors</span>
+              <div class="swatch-row" id="borderSolidSwatches"></div>
+              <input type="color" id="borderSolidPicker" value="#32d296" />
+            </div>
+            <div class="control" id="borderGradientControls" hidden>
+              <span>Gradient Swatches</span>
+              <div class="swatch-row" id="borderGradientSwatches"></div>
+              <div class="gradient-edit">
+                <input type="color" class="border-grad-color" value="#feda75" />
+                <input type="color" class="border-grad-color" value="#d62976" />
+                <input type="color" class="border-grad-color" value="#962fbf" />
+                <input type="color" class="border-grad-color" value="#4f5bd5" />
+              </div>
+              <div class="button-row">
+                <button class="pill toggle active" data-border-grad="conic">Conic</button>
+                <button class="pill toggle" data-border-grad="linear">Linear</button>
+                <button class="pill toggle" data-border-grad="radial">Radial</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel" id="panel-text">
+            <div class="panel-header">
+              <h3>Text</h3>
+            </div>
+            <label class="control">
+              <span>Enter your text</span>
+              <input type="text" id="textInput" placeholder="Say hello" />
+            </label>
+            <label class="control">
+              <span>Font Size</span>
+              <div class="slider-row">
+                <input type="range" id="textSize" min="12" max="120" value="32" />
+                <span class="value" id="textSizeValue">32px</span>
+              </div>
+            </label>
+            <div class="control">
+              <span>Text Style</span>
+              <div class="button-row">
+                <button class="pill toggle active" data-text-style="straight">Straight</button>
+                <button class="pill toggle" data-text-style="curved">Curved</button>
+                <button class="pill toggle" data-text-style="vertical">Vertical</button>
+              </div>
+            </div>
+            <label class="control">
+              <span>Position X</span>
+              <div class="slider-row">
+                <input type="range" id="textX" min="0" max="100" value="50" />
+                <span class="value" id="textXValue">50%</span>
+              </div>
+            </label>
+            <label class="control">
+              <span>Position Y</span>
+              <div class="slider-row">
+                <input type="range" id="textY" min="0" max="100" value="80" />
+                <span class="value" id="textYValue">80%</span>
+              </div>
+            </label>
+            <div class="control">
+              <span>Font Family</span>
+              <select id="textFont">
+                <option value="Inter, Arial, sans-serif">Inter</option>
+                <option value="Arial, sans-serif">Arial</option>
+                <option value="Roboto, sans-serif">Roboto</option>
+                <option value="Times New Roman, serif">Times</option>
+              </select>
+            </div>
+            <div class="control">
+              <span>Font Weight</span>
+              <select id="textWeight">
+                <option value="400">Normal</option>
+                <option value="600">Bold</option>
+              </select>
+            </div>
+            <label class="control">
+              <span>Letter Spacing</span>
+              <div class="slider-row">
+                <input type="range" id="textSpacing" min="-5" max="20" value="0" />
+                <span class="value" id="textSpacingValue">0px</span>
+              </div>
+            </label>
+            <div class="control">
+              <span>Text Color</span>
+              <div class="button-row">
+                <button class="pill toggle active" data-text-color="solid">Solid</button>
+                <button class="pill toggle" data-text-color="gradient">Gradient</button>
+              </div>
+              <div class="swatch-row" id="textSolidSwatches"></div>
+              <input type="color" id="textSolidPicker" value="#ffffff" />
+              <div class="gradient-edit" id="textGradientControls" hidden>
+                <input type="color" class="text-grad-color" value="#22d3ee" />
+                <input type="color" class="text-grad-color" value="#a855f7" />
+                <input type="color" class="text-grad-color" value="#f97316" />
+              </div>
+            </div>
+            <label class="control">
+              <span>Text Opacity</span>
+              <div class="slider-row">
+                <input type="range" id="textOpacity" min="0" max="100" value="100" />
+                <span class="value" id="textOpacityValue">100%</span>
+              </div>
+            </label>
+            <label class="control">
+              <span>Curved Radius</span>
+              <div class="slider-row">
+                <input type="range" id="textRadius" min="80" max="260" value="180" />
+                <span class="value" id="textRadiusValue">180px</span>
+              </div>
+            </label>
+            <label class="control">
+              <span>Curved Start Angle</span>
+              <div class="slider-row">
+                <input type="range" id="textAngle" min="-180" max="180" value="-90" />
+                <span class="value" id="textAngleValue">-90°</span>
+              </div>
+            </label>
+          </div>
+        </div>
+      </aside>
+
+      <section class="center-stage">
+        <div class="canvas-shell">
+          <div class="grid-bg"></div>
+          <canvas id="editorCanvas" width="640" height="640"></canvas>
+          <div class="loading" id="loading" hidden>
+            <div class="spinner"></div>
+            Processing...
+          </div>
+        </div>
+        <div class="canvas-actions">
+          <button class="pill ghost" id="zoomIn">＋</button>
+          <button class="pill ghost" id="resetAll">Reset</button>
+          <button class="pill primary" id="downloadBtn">Download</button>
+          <select id="exportSize">
+            <option value="512">512 x 512</option>
+            <option value="800">800 x 800</option>
+            <option value="1080" selected>1080 x 1080</option>
+          </select>
+        </div>
+        <p class="hint">Drag the image or text directly on the canvas to reposition.</p>
+      </section>
+
+      <aside class="right-rail">
+        <div class="promo-card">
+          <h3>Need a professional LinkedIn photo?</h3>
+          <p>Upgrade to premium headshots with AI lighting, studio backgrounds, and style packs.</p>
+          <button class="pill primary">Explore styles</button>
+        </div>
+        <div class="promo-card">
+          <h4>Quick tips</h4>
+          <ul>
+            <li>Use solid backgrounds for clean avatars.</li>
+            <li>Rotate gradients for Instagram-style rings.</li>
+            <li>Try curved text for gaming profiles.</li>
+          </ul>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" hidden>Saved!</div>
+
+  <script src="app.js"></script>
+</body>
+</html>
